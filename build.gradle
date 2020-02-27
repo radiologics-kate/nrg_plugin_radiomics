@@ -26,7 +26,7 @@ apply plugin: 'xnat-data-builder'
 
 buildscript {
     ext {
-        vXnat = '1.7.6-SNAPSHOT'
+        vXnat = '1.7.6.RAD'
     }
     repositories {
         mavenLocal()
@@ -39,6 +39,14 @@ buildscript {
         maven {
             url 'https://nrgxnat.jfrog.io/nrgxnat/libs-snapshot'
             name 'XNAT Snapshot Repository'
+        }
+        maven {
+            url "https://maven.radiologics.com/repository/snapshots"
+            name "Radiologics Snapshot Repository"
+        }
+        maven {
+            url "https://maven.radiologics.com/repository/internal"
+            name "Radiologics Release Repository"
         }
     }
     dependencies {
@@ -64,6 +72,14 @@ repositories {
     maven {
         url 'https://nrgxnat.jfrog.io/nrgxnat/ext-release'
         name 'XNAT External Release Repository'
+    }
+    maven {
+        url "https://maven.radiologics.com/repository/snapshots"
+        name "Radiologics Snapshot Repository"
+    }
+    maven {
+        url "https://maven.radiologics.com/repository/internal"
+        name "Radiologics Release Repository"
     }
 }
 
@@ -99,7 +115,7 @@ jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 
@@ -130,6 +146,7 @@ dependencies{
     compile "org.nrg.xnat:xnat-data-models"
     compile "org.nrg.xdat:core"
     compile "org.nrg:framework"
+    annotationProcessor "org.nrg:framework"
     compile(group: 'turbine', name: 'turbine') {
         exclude group: '*'
     }
